@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: cb-studios
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: MAX_UPLOAD_MB
+        value: "25"
+      - key: ALLOWED_ORIGINS
+        value: "https://cbstudio.infinityfree.me,http://cbstudio.infinityfree.me"
