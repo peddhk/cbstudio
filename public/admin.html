@@ -9,6 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" href="/logo.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="/style.css" />
+  <!-- Para usar uma API externa (ex: Render), troque o content abaixo:
+       <meta name="cb-api-base" content="https://cb-studios.onrender.com"> -->
+  <meta name="cb-api-base" content="" />
 </head>
 <body>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -74,6 +77,8 @@
   </footer>
 
   <script>
+    const API_BASE = (document.querySelector('meta[name="cb-api-base"]')?.content || '').replace(/\/$/, '');
+    const api = (path) => `${API_BASE}${path}`;
     document.getElementById('year').textContent = new Date().getFullYear();
     const tokenInput = document.getElementById('tokenInput');
     const loadBtn = document.getElementById('loadBtn');
@@ -106,7 +111,7 @@
 
       rows.innerHTML = '<tr><td class="empty" colspan="8">Carregando…</td></tr>';
       try {
-        const res = await fetch('/api/list', { headers: { 'x-admin-token': token } });
+        const res = await fetch(api('/api/list'), { headers: { 'x-admin-token': token } });
         if (res.status === 401) {
           rows.innerHTML = '<tr><td class="empty" colspan="8">Token inválido.</td></tr>';
           statTotal.textContent = '—'; statSize.textContent = '—'; statLast.textContent = '—';
@@ -131,7 +136,7 @@
             <td>${fmtBytes(item.size || 0)}</td>
             <td>${item.uploadedAt ? new Date(item.uploadedAt).toLocaleString() : '—'}</td>
             <td>
-              <a class="btn" href="/api/view/${encodeURIComponent(item.key)}" target="_blank" rel="noopener">Ver</a>
+              <a class="btn" href="${api('/api/view/' + encodeURIComponent(item.key))}" target="_blank" rel="noopener">Ver</a>
             </td>
           </tr>
         `).join('');
