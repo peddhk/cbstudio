@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enviar Replay · CB Studio's</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="cb-api-base" content="" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="/" class="brand">
+      <img src="/logo.svg" alt="" class="brand-logo" />
+      <span class="brand-text">CB Studio's</span>
+    </a>
+    <nav class="topnav">
+      <a href="/">Início</a>
+      <a href="/upload.html" class="active">Enviar</a>
+    </nav>
+  </header>
+
+  <main class="upload-wrap">
+    <section class="upload-hero">
+      <h1>Enviar Replay</h1>
+      <p class="muted">
+        Cole o conteúdo do replay (gerado pelo addon no Minecraft) ou
+        envie um arquivo <code>.json</code>. Você vai receber uma KEY
+        única (tipo <span class="key-tag">CBA9-21LK</span>) pra
+        compartilhar com seus amigos.
+      </p>
+    </section>
+
+    <div class="upload-card">
+      <div class="tabs">
+        <button class="tab active" data-tab="paste">Colar texto</button>
+        <button class="tab" data-tab="file">Enviar arquivo</button>
+      </div>
+
+      <div class="tab-panel" data-panel="paste">
+        <label for="jsonInput" class="label">Conteúdo do replay (JSON)</label>
+        <textarea
+          id="jsonInput"
+          rows="10"
+          placeholder='Cole aqui o JSON do replay. No addon: abra o replay → Exportar → selecione tudo (Ctrl+A) → copie → cole aqui.'
+          spellcheck="false"
+        ></textarea>
+        <div class="upload-info">
+          <span id="charCount" class="muted">0 caracteres</span>
+          <button id="clearBtn" class="link-btn" type="button">Limpar</button>
+        </div>
+      </div>
+
+      <div class="tab-panel hidden" data-panel="file">
+        <label class="file-drop" id="fileDrop">
+          <input id="fileInput" type="file" accept=".json,application/json" hidden />
+          <div class="file-icon">📁</div>
+          <div class="file-text">
+            <strong>Clique para escolher</strong>
+            <span class="muted">ou arraste o arquivo .json aqui</span>
+          </div>
+          <div id="fileName" class="file-name"></div>
+        </label>
+      </div>
+
+      <button id="sendBtn" class="btn primary big" type="button">
+        <span class="btn-label">Enviar Replay</span>
+        <span class="btn-spinner" hidden></span>
+      </button>
+
+      <div id="result" class="result" aria-live="polite"></div>
+    </div>
+
+    <section class="upload-help">
+      <h2>Como exportar do Minecraft</h2>
+      <ol>
+        <li>No jogo, abra o item <strong>CB Studio</strong> (ou CB Replay)</li>
+        <li>Vá em <strong>Biblioteca</strong> e escolha o replay</li>
+        <li>Clique em <strong>Exportar</strong></li>
+        <li>Selecione tudo (Ctrl+A no PC, ou segure no celular) e copie</li>
+        <li>Volte aqui, cole na caixa acima e clique em <strong>Enviar Replay</strong></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> CB Studio's</p>
+  </footer>
+
+  <script src="/upload.js"></script>
+</body>
+</html>
