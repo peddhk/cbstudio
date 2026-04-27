@@ -87,16 +87,30 @@
       return;
     }
 
-    let payload;
+    let raw_obj;
     try {
-      payload = JSON.parse(raw);
+      raw_obj = JSON.parse(raw);
     } catch {
       showError("O conteúdo não é um JSON válido. Verifique se você copiou tudo.");
       return;
     }
 
-    if (!payload || typeof payload !== "object") {
+    if (!raw_obj || typeof raw_obj !== "object") {
       showError("Formato inválido — esperado um objeto JSON.");
+      return;
+    }
+
+    // Normalize addon v2 format → backend format expected by PHP
+    const payload = {
+      player: raw_obj.player || "Anônimo",
+      replayName: raw_obj.replayName || raw_obj.name || "Sem nome",
+      mode: raw_obj.mode || "performance",
+      frames: raw_obj.frames || [],
+      settings: raw_obj.settings || {},
+    };
+
+    if (!Array.isArray(payload.frames) || payload.frames.length === 0) {
+      showError('O replay precisa ter pelo menos 1 frame no campo "frames".');
       return;
     }
 
